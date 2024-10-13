@@ -12,12 +12,19 @@ import {
   Input,
   InputOnChangeData
 } from "@fluentui/react-components";
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useStyles } from "./Project.styles";
-import { columns, items } from "./Projects.mocks";
+import { Filter } from "./components/Filter";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { Item } from "./Projects.models";
+import { getTableData, setSearchValue } from "./store/Projects.store";
+import { columns } from "./Projects.mocks";
 
 export const Projects = () => {
   const styles = useStyles();
+  const { tableData, searchValue, initalTableData } = useSelector((state: RootState) => state.projects);
+  const dispatch = useDispatch();
 
   const [sortState, setSortState] = useState<{
     sortDirection: "ascending" | "descending";
@@ -26,19 +33,18 @@ export const Projects = () => {
     sortDirection: "ascending" as const,
     sortColumn: "projectName",
   });
-  const [searchValue, setSearchValue] = useState<string>('');
 
   const handleSearch = (inputData: InputOnChangeData) => {
-    setSearchValue(inputData.value);
+    dispatch(setSearchValue(inputData.value))
   };
 
   const {
     getRows,
     sort: { getSortDirection, toggleColumnSort, sort },
-  } = useTableFeatures(
+  } = useTableFeatures<Item>(
     {
       columns,
-      items,
+      items: tableData,
     },
     [
       useTableSort({
@@ -56,17 +62,8 @@ export const Projects = () => {
   const rows = sort(getRows());
 
   const filteredTableData = useMemo(() => {
-    if (!searchValue) return rows;
-
-    const filteredData = rows.filter(({ item }) => {
-      const projectNameValue = item.projectName.label.toLowerCase();
-      const clientValue = item.client.label.toLowerCase();
-      const searchTerm = searchValue.toLowerCase();
-
-      return projectNameValue.includes(searchTerm) || clientValue.includes(searchTerm);
-    });
-    return filteredData;
-  }, [rows, searchValue]);
+    return rows;
+  }, [rows]);
 
   const highlightText = (text: string, searchValue: string): React.ReactNode => {
     if (!searchValue) return text;
@@ -79,6 +76,23 @@ export const Projects = () => {
     );
   };
 
+  const getFilterOptionItems = () => {
+    const filterOptionItems: Record<'projectName' | 'client', string[]> = {
+      projectName: [],
+      client: [],
+    };
+    initalTableData.forEach(({ projectName, client }) => {
+      filterOptionItems.projectName.push(projectName.label);
+      filterOptionItems.client.push(client.label);
+    })
+    return filterOptionItems;
+  }
+
+  useEffect(() => {
+    dispatch(getTableData())
+  }, [dispatch])
+
+
   return (
     <div className={styles.contentWrapper}>
       <div className={styles.headerWrapper}>
@@ -86,6 +100,9 @@ export const Projects = () => {
           <h3>Projects: ({filteredTableData.length})</h3>
         </div>
         <div>
+          <Filter
+            filterOptionItems={getFilterOptionItems()}
+          />
           <Input
             className={styles.inputStyles}
             value={searchValue}

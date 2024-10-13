@@ -2,6 +2,8 @@
 import { FluentProvider, webLightTheme } from "@fluentui/react-components";
 import "./globals.css";
 import { useStyles } from "./layout.styles";
+import { store } from './store';
+import { Provider } from 'react-redux';
 
 export default function RootLayout({
   children,
@@ -10,26 +12,28 @@ export default function RootLayout({
 }>) {
   const styles = useStyles();
   return (
-    <html lang="en">
-      <body style={{ margin: 0, padding: 0, height: "100vh" }}>
-        <FluentProvider theme={webLightTheme}>
-          <div
-            className={styles.mainWrapper}
-          >
+    <Provider store={store}>
+      <html lang="en">
+        <body>
+          <FluentProvider theme={webLightTheme}>
             <div
-              className={styles.navBarWrapper}
+              className={styles.mainWrapper}
             >
-              NavBar
-            </div>
+              <div
+                className={styles.navBarWrapper}
+              >
+                NavBar
+              </div>
 
-            <div
-              className={styles.contentWrapper}
-            >
-              {children}
+              <div
+                className={styles.contentWrapper}
+              >
+                {children}
+              </div>
             </div>
-          </div>
-        </FluentProvider>
-      </body>
-    </html>
+          </FluentProvider>
+        </body>
+      </html>
+    </Provider>
   );
 }

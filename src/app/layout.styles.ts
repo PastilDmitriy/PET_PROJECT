@@ -2,6 +2,8 @@ import { makeStyles } from "@fluentui/react-components";
 
 export const useStyles = makeStyles({
   mainWrapper: {
+    margin: 0,
+    padding: 0,
     display: "flex",
     height: "100vh",
     background: "#f3f3f3"
@@ -18,4 +20,4 @@ export const useStyles = makeStyles({
     borderRadius: "10px",
     margin: '6px',
   },
-});
+}); 
