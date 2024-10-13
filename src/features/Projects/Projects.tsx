@@ -11,87 +11,95 @@ import {
   useTableSort,
   Input,
   InputOnChangeData
-} from "@fluentui/react-components";
-import React, { useEffect, useMemo, useState } from 'react';
-import { useStyles } from "./Project.styles";
-import { Filter } from "./components/Filter";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/app/store";
-import { Item } from "./Projects.models";
-import { getTableData, setSearchValue } from "./store/Projects.store";
-import { columns } from "./Projects.mocks";
+} from '@fluentui/react-components'
+import React, { useEffect, useMemo, useState } from 'react'
+import { useStyles } from './Project.styles'
+import { Filter } from './components/Filter'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '@/app/store'
+import { Item } from './Projects.models'
+import { getTableData, setSearchValue } from './store/Projects.store'
+import { columns } from './Projects.mocks'
 
 export const Projects = () => {
-  const styles = useStyles();
-  const { tableData, searchValue, initalTableData } = useSelector((state: RootState) => state.projects);
-  const dispatch = useDispatch();
+  const styles = useStyles()
+  const { tableData, searchValue, initialTableData } = useSelector(
+    (state: RootState) => state.projects
+  )
+  const dispatch = useDispatch()
 
   const [sortState, setSortState] = useState<{
-    sortDirection: "ascending" | "descending";
-    sortColumn: TableColumnId | undefined;
+    sortDirection: 'ascending' | 'descending'
+    sortColumn: TableColumnId | undefined
   }>({
-    sortDirection: "ascending" as const,
-    sortColumn: "projectName",
-  });
+    sortDirection: 'ascending' as const,
+    sortColumn: 'projectName'
+  })
 
   const handleSearch = (inputData: InputOnChangeData) => {
     dispatch(setSearchValue(inputData.value))
-  };
+  }
 
   const {
     getRows,
-    sort: { getSortDirection, toggleColumnSort, sort },
+    sort: { getSortDirection, toggleColumnSort, sort }
   } = useTableFeatures<Item>(
     {
       columns,
-      items: tableData,
+      items: tableData
     },
     [
       useTableSort({
         sortState,
-        onSortChange: (e, nextSortState) => setSortState(nextSortState),
-      }),
+        onSortChange: (e, nextSortState) => setSortState(nextSortState)
+      })
     ]
-  );
+  )
 
   const headerSortProps = (columnId: TableColumnId) => ({
     onClick: (e: React.MouseEvent) => toggleColumnSort(e, columnId),
-    sortDirection: getSortDirection(columnId),
-  });
+    sortDirection: getSortDirection(columnId)
+  })
 
-  const rows = sort(getRows());
+  const rows = sort(getRows())
 
-  const filteredTableData = useMemo(() => {
-    return rows;
-  }, [rows]);
+  const filteredTableData = useMemo(() => rows, [rows])
 
-  const highlightText = (text: string, searchValue: string): React.ReactNode => {
-    if (!searchValue) return text;
+  const highlightText = (
+    text: string,
+    searchValue: string
+  ): React.ReactNode => {
+    if (!searchValue) return text
 
-    const regex = new RegExp(`(${searchValue})`, 'gi');
-    const parts = text.split(regex);
+    const regex = new RegExp(`(${searchValue})`, 'gi')
+    const parts = text.split(regex)
 
     return parts.map((part, index) =>
-      regex.test(part) ? <mark key={index} style={{ backgroundColor: '#f3f3f3' }}>{part}</mark> : part
-    );
-  };
+      regex.test(part) ? (
+        <mark key={index} style={{ backgroundColor: '#f3f3f3' }}>
+          {part}
+        </mark>
+      ) : (
+        part
+      )
+    )
+  }
 
   const getFilterOptionItems = () => {
     const filterOptionItems: Record<'projectName' | 'client', string[]> = {
       projectName: [],
-      client: [],
-    };
-    initalTableData.forEach(({ projectName, client }) => {
-      filterOptionItems.projectName.push(projectName.label);
-      filterOptionItems.client.push(client.label);
+      client: []
+    }
+    initialTableData.forEach(({ projectName, client }) => {
+      filterOptionItems.projectName.push(projectName.label)
+      filterOptionItems.client.push(client.label)
     })
-    return filterOptionItems;
+    return filterOptionItems
   }
 
   useEffect(() => {
     dispatch(getTableData())
   }, [dispatch])
-
 
   return (
     <div className={styles.contentWrapper}>
@@ -100,9 +108,7 @@ export const Projects = () => {
           <h3>Projects: ({filteredTableData.length})</h3>
         </div>
         <div>
-          <Filter
-            filterOptionItems={getFilterOptionItems()}
-          />
+          <Filter filterOptionItems={getFilterOptionItems()} />
           <Input
             className={styles.inputStyles}
             value={searchValue}
@@ -112,25 +118,34 @@ export const Projects = () => {
         </div>
       </div>
 
-      <Table
-        sortable
-        className={styles.tableStyles}
-      >
+      <Table sortable className={styles.tableStyles}>
         <TableHeader>
           <TableRow>
-            <TableHeaderCell {...headerSortProps("projectName")}>Project Name</TableHeaderCell>
-            <TableHeaderCell {...headerSortProps("client")}>Client</TableHeaderCell>
-            <TableHeaderCell {...headerSortProps("industry")}>Industry</TableHeaderCell>
-            <TableHeaderCell {...headerSortProps("status")}>Status</TableHeaderCell>
-            <TableHeaderCell {...headerSortProps("startDate")}>Start Date</TableHeaderCell>
-            <TableHeaderCell {...headerSortProps("endDate")}>End Date</TableHeaderCell>
+            <TableHeaderCell {...headerSortProps('projectName')}>
+              Project Name
+            </TableHeaderCell>
+            <TableHeaderCell {...headerSortProps('client')}>
+              Client
+            </TableHeaderCell>
+            <TableHeaderCell {...headerSortProps('industry')}>
+              Industry
+            </TableHeaderCell>
+            <TableHeaderCell {...headerSortProps('status')}>
+              Status
+            </TableHeaderCell>
+            <TableHeaderCell {...headerSortProps('startDate')}>
+              Start Date
+            </TableHeaderCell>
+            <TableHeaderCell {...headerSortProps('endDate')}>
+              End Date
+            </TableHeaderCell>
           </TableRow>
         </TableHeader>
         <TableBody>
           {filteredTableData.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={6} style={{ textAlign: "center" }}>
-                No projects or clients found, please update search cretirea
+              <TableCell colSpan={6} style={{ textAlign: 'center' }}>
+                No projects or clients found, please update search criteria
               </TableCell>
             </TableRow>
           ) : (
@@ -141,7 +156,9 @@ export const Projects = () => {
                     {highlightText(item.projectName.label, searchValue)}
                   </TableCellLayout>
                 </TableCell>
-                <TableCell>{highlightText(item.client.label, searchValue)}</TableCell>
+                <TableCell>
+                  {highlightText(item.client.label, searchValue)}
+                </TableCell>
                 <TableCell>{item.industry.label}</TableCell>
                 <TableCell>{item.status.label}</TableCell>
                 <TableCell>{item.startDate.label}</TableCell>
@@ -152,5 +169,5 @@ export const Projects = () => {
         </TableBody>
       </Table>
     </div>
-  );
-};
+  )
+}

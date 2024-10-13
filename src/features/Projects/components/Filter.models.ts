@@ -1,13 +1,13 @@
 export interface IFilterProps {
   filterOptionItems: {
-    projectName: string[],
-    client: string[],
-  };
+    projectName: string[]
+    client: string[]
+  }
 }
 
 export interface IFilterData {
   [key: string]: {
-    cretirea: 'projectName' | 'client' | '',
+    criteria: 'projectName' | 'client' | ''
     value: string[]
   }
 }

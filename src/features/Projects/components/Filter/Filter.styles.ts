@@ -1,4 +1,4 @@
-import { makeStyles } from "@fluentui/react-components";
+import { makeStyles } from '@fluentui/react-components'
 
 export const useStyles = makeStyles({
   popoverContentWrapper: {
@@ -9,7 +9,7 @@ export const useStyles = makeStyles({
     width: '100%',
     display: 'flex',
     justifyContent: 'space-between',
-    marginTop: '10px',
+    marginTop: '10px'
   },
   controlPopoverBtns: {
     display: 'flex',
@@ -20,10 +20,10 @@ export const useStyles = makeStyles({
     alignItems: 'baseline'
   },
   filterCretirionSelectWrapper: {
-    width: '45%',
+    width: '45%'
   },
   filterValueSelectWrapper: {
-    width: '55%',
+    width: '55%'
   },
   filterValueSelect: {
     width: '100%'

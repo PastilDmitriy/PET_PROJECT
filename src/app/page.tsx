@@ -1,10 +1,8 @@
-'use client';
+'use client'
 
-import { Projects } from '@/features/Projects';
-import './page.module.css';
+import { Projects } from '@/features/Projects'
+import './page.module.css'
 
 export default function Home() {
-  return (
-    <Projects />
-  );
+  return <Projects />
 }
