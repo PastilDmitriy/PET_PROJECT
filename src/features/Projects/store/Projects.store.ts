@@ -1,21 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Item } from '../Projects.models';
 import { items } from '../Projects.mocks';
-import { IFilterData } from '../components/Filter.models';
 
 export interface IProjectsState {
   initialTableData: Item[];
   tableData: Item[];
-  filteredTableData: Item[];
-  filtersData: IFilterData | null;
+  filteredTableData: Item[] | null;
+  filtersData: Record<'projectName' | 'client', string[]>;
   searchValue: string;
 }
 
 const initialState: IProjectsState = {
   initialTableData: [],
-  filteredTableData: [],
+  filteredTableData: null,
   tableData: [],
-  filtersData: null,
+  filtersData: {
+    projectName: [],
+    client: [],
+  },
   searchValue: '',
 };
 
@@ -26,43 +28,57 @@ export const ProjectsSlice = createSlice({
     getTableData: state => {
       state.tableData = items;
       state.initialTableData = items;
+      state.filteredTableData = null;
     },
-    setFilters: (state, action: PayloadAction<IFilterData | null>) => {
-      const filtersData = action.payload;
-      state.filtersData = action.payload;
 
-      if (!filtersData) {
-        state.tableData = state.initialTableData;
-        state.filteredTableData = state.initialTableData;
-      } else {
-        let updatedTableData: Item[] = [];
-        Object.values(filtersData).forEach(({ criteria, value }) => {
-          updatedTableData = state.initialTableData.filter(item => {
-            const isCriteriaExist = !!criteria;
-            if (isCriteriaExist && value.includes(item[criteria].label)) return true;
-          });
+    setFilters: (state, action: PayloadAction<Record<'projectName' | 'client', string[]>>) => {
+      const filtersData = action.payload;
+      state.filtersData = filtersData;
+
+      state.filteredTableData = state.initialTableData;
+
+      if (Object.values(filtersData).flat().length) {
+        let filteredData = state.initialTableData;
+
+        Object.keys(filtersData).forEach(criteria => {
+          const filterValues = filtersData[criteria as 'projectName' | 'client'];
+
+          if (filterValues.length > 0) {
+            filteredData = filteredData.filter(item => {
+              const itemValue = item[criteria as 'projectName' | 'client'].label;
+              return filterValues.includes(itemValue);
+            });
+          }
         });
-        state.tableData = updatedTableData;
-        state.filteredTableData = updatedTableData;
-        state.searchValue = '';
+
+        state.filteredTableData = filteredData;
+        state.tableData = filteredData;
+      } else {
+        state.filteredTableData = null;
+        state.tableData = state.initialTableData;
       }
+
+      state.searchValue = '';
     },
+
     setSearchValue: (state, action: PayloadAction<string>) => {
       const searchValue = action.payload;
-      if (!searchValue && !state.filtersData) {
-        state.tableData = state.initialTableData;
-      } else if (!searchValue) {
-        state.tableData = state.filteredTableData;
-      } else {
-        state.tableData = state.filteredTableData.filter(item => {
+      state.searchValue = searchValue;
+
+      let dataToSearch = state.filteredTableData ?? state.initialTableData;
+
+      if (searchValue) {
+        const lowercasedSearchValue = searchValue.toLowerCase();
+
+        state.tableData = dataToSearch.filter(item => {
           const projectNameValue = item.projectName.label.toLowerCase();
           const clientValue = item.client.label.toLowerCase();
-          const searchTerm = searchValue.toLowerCase();
 
-          return projectNameValue.includes(searchTerm) || clientValue.includes(searchTerm);
+          return projectNameValue.includes(lowercasedSearchValue) || clientValue.includes(lowercasedSearchValue);
         });
+      } else {
+        state.tableData = state.filteredTableData ?? state.initialTableData;
       }
-      state.searchValue = searchValue;
     },
   },
 });
