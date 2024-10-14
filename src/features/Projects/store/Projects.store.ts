@@ -33,6 +33,7 @@ export const ProjectsSlice = createSlice({
 
       if (!filtersData) {
         state.tableData = state.initialTableData;
+        state.filteredTableData = state.initialTableData;
       } else {
         let updatedTableData: Item[] = [];
         Object.values(filtersData).forEach(({ criteria, value }) => {
