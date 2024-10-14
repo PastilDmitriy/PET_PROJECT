@@ -1,4 +1,4 @@
-import { makeStyles } from '@fluentui/react-components'
+import { makeStyles } from '@fluentui/react-components';
 
 export const useStyles = makeStyles({
   contentWrapper: {
@@ -7,7 +7,7 @@ export const useStyles = makeStyles({
     width: '100%',
     height: '100%',
     overflowY: 'auto',
-    borderRadius: '10px'
+    borderRadius: '10px',
   },
   headerWrapper: {
     display: 'flex',
@@ -15,13 +15,19 @@ export const useStyles = makeStyles({
     alignItems: 'center',
     width: '100%',
     height: '44px',
-    padding: '24px'
+    padding: '24px',
   },
   inputStyles: {
-    width: '300px'
+    width: '300px',
   },
   tableStyles: {
     minWidth: '500px',
-    height: 'fit-content'
-  }
-})
+    height: 'fit-content',
+  },
+  notFoundContent: {
+    textAlign: 'center',
+  },
+  highlightedText: {
+    backgroundColor: '#f3f3f3',
+  },
+});
