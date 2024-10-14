@@ -31,4 +31,14 @@ export const useStyles = makeStyles({
   highlightedText: {
     backgroundColor: '#f3f3f3',
   },
+  filteredColumnWrapper: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  headerCell: {
+    '& svg': {
+      fontSize: '16px',
+    },
+  },
 });

@@ -1,4 +1,8 @@
 import {
+  Field,
+  InputOnChangeData,
+  SearchBox,
+  Table,
   TableBody,
   TableCell,
   TableCellLayout,
@@ -6,20 +10,18 @@ import {
   TableHeader,
   TableHeaderCell,
   TableRow,
-  Table,
   useTableFeatures,
   useTableSort,
-  Input,
-  InputOnChangeData,
 } from '@fluentui/react-components';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useStyles } from './Project.styles';
-import { Filter } from './components/Filter';
-import { useDispatch, useSelector } from 'react-redux';
+// import { Filter } from './components/Filter';
 import { RootState } from '@/app/store';
-import { Item } from './Projects.models';
-import { getTableData, setSearchValue } from './store/Projects.store';
+import { useDispatch, useSelector } from 'react-redux';
 import { columns } from './Projects.mocks';
+import { Item } from './Projects.models';
+import { PopoverFilter } from './components/PopoverFilter';
+import { getTableData, setSearchValue } from './store/Projects.store';
 
 export const Projects = () => {
   const styles = useStyles();
@@ -106,20 +108,39 @@ export const Projects = () => {
           <h3>Projects: ({filteredTableData.length})</h3>
         </div>
         <div>
-          <Filter filterOptionItems={getFilterOptionItems()} />
-          <Input className={styles.inputStyles} value={searchValue} onChange={(event, data) => handleSearch(data)} placeholder="Search projects by name or client" />
+          <Field>
+            <SearchBox className={styles.inputStyles} value={searchValue} onChange={(_e, data) => handleSearch(data)} placeholder="Search projects by name or client" />
+          </Field>
         </div>
       </div>
 
       <Table sortable className={styles.tableStyles}>
         <TableHeader>
           <TableRow>
-            <TableHeaderCell {...headerSortProps('projectName')}>Project Name</TableHeaderCell>
-            <TableHeaderCell {...headerSortProps('client')}>Client</TableHeaderCell>
-            <TableHeaderCell {...headerSortProps('industry')}>Industry</TableHeaderCell>
-            <TableHeaderCell {...headerSortProps('status')}>Status</TableHeaderCell>
-            <TableHeaderCell {...headerSortProps('startDate')}>Start Date</TableHeaderCell>
-            <TableHeaderCell {...headerSortProps('endDate')}>End Date</TableHeaderCell>
+            <TableHeaderCell {...headerSortProps('projectName')} className={styles.headerCell}>
+              <div className={styles.filteredColumnWrapper}>
+                <p>Project Name</p>
+                <PopoverFilter options={getFilterOptionItems().projectName} criterion="projectName" />
+              </div>
+            </TableHeaderCell>
+            <TableHeaderCell {...headerSortProps('client')} className={styles.headerCell}>
+              <div className={styles.filteredColumnWrapper}>
+                <p>Client</p>
+                <PopoverFilter options={getFilterOptionItems().client} criterion="client" />
+              </div>
+            </TableHeaderCell>
+            <TableHeaderCell {...headerSortProps('industry')} className={styles.headerCell}>
+              Industry
+            </TableHeaderCell>
+            <TableHeaderCell {...headerSortProps('status')} className={styles.headerCell}>
+              Status
+            </TableHeaderCell>
+            <TableHeaderCell {...headerSortProps('startDate')} className={styles.headerCell}>
+              Start Date
+            </TableHeaderCell>
+            <TableHeaderCell {...headerSortProps('endDate')} className={styles.headerCell}>
+              End Date
+            </TableHeaderCell>
           </TableRow>
         </TableHeader>
         <TableBody>
