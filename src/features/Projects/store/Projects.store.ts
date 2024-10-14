@@ -4,14 +4,16 @@ import { items } from '../Projects.mocks';
 import { IFilterData } from '../components/Filter.models';
 
 export interface IProjectsState {
-  initalTableData: Item[],
-  tableData: Item[],
-  filtersData: IFilterData | null,
-  searchValue: string,
+  initialTableData: Item[];
+  tableData: Item[];
+  filteredTableData: Item[];
+  filtersData: IFilterData | null;
+  searchValue: string;
 }
 
 const initialState: IProjectsState = {
-  initalTableData: [],
+  initialTableData: [],
+  filteredTableData: [],
   tableData: [],
   filtersData: null,
   searchValue: '',
@@ -21,36 +23,37 @@ export const ProjectsSlice = createSlice({
   name: 'projects',
   initialState,
   reducers: {
-    getTableData: (state) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
+    getTableData: state => {
       state.tableData = items;
-      state.initalTableData = items;
+      state.initialTableData = items;
     },
     setFilters: (state, action: PayloadAction<IFilterData | null>) => {
       const filtersData = action.payload;
       state.filtersData = action.payload;
 
       if (!filtersData) {
-        state.tableData = state.initalTableData;
+        state.tableData = state.initialTableData;
       } else {
-        Object.values(filtersData).forEach(({ cretirea, value }) => {
-          state.tableData = state.initalTableData.filter((item) => {
-            const isCretireaExist = !!cretirea
-            if (isCretireaExist && value.includes(item[cretirea].label)) return true
-          })
-        })
+        let updatedTableData: Item[] = [];
+        Object.values(filtersData).forEach(({ criteria, value }) => {
+          updatedTableData = state.initialTableData.filter(item => {
+            const isCriteriaExist = !!criteria;
+            if (isCriteriaExist && value.includes(item[criteria].label)) return true;
+          });
+        });
+        state.tableData = updatedTableData;
+        state.filteredTableData = updatedTableData;
         state.searchValue = '';
       }
     },
     setSearchValue: (state, action: PayloadAction<string>) => {
       const searchValue = action.payload;
       if (!searchValue && !state.filtersData) {
-        state.tableData = state.initalTableData
+        state.tableData = state.initialTableData;
+      } else if (!searchValue) {
+        state.tableData = state.filteredTableData;
       } else {
-        state.tableData = state.tableData.filter((item) => {
+        state.tableData = state.filteredTableData.filter(item => {
           const projectNameValue = item.projectName.label.toLowerCase();
           const clientValue = item.client.label.toLowerCase();
           const searchTerm = searchValue.toLowerCase();
@@ -61,7 +64,7 @@ export const ProjectsSlice = createSlice({
       state.searchValue = searchValue;
     },
   },
-})
+});
 
 export const { getTableData, setFilters, setSearchValue } = ProjectsSlice.actions;
 

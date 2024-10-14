@@ -1,9 +1,9 @@
-import { makeStyles } from "@fluentui/react-components";
+import { makeStyles } from '@fluentui/react-components';
 
 export const useStyles = makeStyles({
   popoverContentWrapper: {
     width: '700px',
-    padding: '12px'
+    padding: '12px',
   },
   buttonGroup: {
     width: '100%',
@@ -13,19 +13,31 @@ export const useStyles = makeStyles({
   },
   controlPopoverBtns: {
     display: 'flex',
-    gap: '6px'
+    gap: '6px',
   },
   selectsWrapper: {
     display: 'flex',
-    alignItems: 'baseline'
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '6px',
   },
-  filterCretirionSelectWrapper: {
+  filterCriterionSelectWrapper: {
     width: '45%',
   },
   filterValueSelectWrapper: {
-    width: '55%',
+    width: '50%',
   },
   filterValueSelect: {
-    width: '100%'
-  }
-})
+    width: '100%',
+  },
+  deleteIconStyles: {
+    cursor: 'pointer',
+    marginTop: '16px',
+    color: 'red',
+  },
+  titleWrapper: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+});

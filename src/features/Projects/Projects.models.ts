@@ -1,4 +1,4 @@
-import { TableColumnDefinition, TableColumnId } from "@fluentui/react-components";
+import { TableColumnDefinition, TableColumnId } from '@fluentui/react-components';
 
 export type FileCell = {
   label: string;
@@ -20,13 +20,15 @@ export type Item = {
 
 export type TGetSortedTableData = {
   sortState: {
-    sortDirection: "ascending" | "descending";
+    sortDirection: 'ascending' | 'descending';
     sortColumn: TableColumnId | undefined;
-  }
-  setSortState: React.Dispatch<React.SetStateAction<{
-    sortDirection: "ascending" | "descending";
-    sortColumn: TableColumnId | undefined;
-  }>>,
-  columns: TableColumnDefinition<Item>[]
-  items: Item[],
-}
+  };
+  setSortState: React.Dispatch<
+    React.SetStateAction<{
+      sortDirection: 'ascending' | 'descending';
+      sortColumn: TableColumnId | undefined;
+    }>
+  >;
+  columns: TableColumnDefinition<Item>[];
+  items: Item[];
+};
