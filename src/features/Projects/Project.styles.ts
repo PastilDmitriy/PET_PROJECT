@@ -19,6 +19,7 @@ export const useStyles = makeStyles({
   },
   inputStyles: {
     width: '300px',
+    marginLeft: '6px',
   },
   tableStyles: {
     minWidth: '500px',
