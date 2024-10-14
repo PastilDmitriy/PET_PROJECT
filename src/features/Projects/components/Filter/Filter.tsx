@@ -129,9 +129,7 @@ export const Filter: FC<IFilterProps> = ({ filterOptionItems }) => {
         <div className={styles.popoverContentWrapper}>
           <div className={styles.titleWrapper}>
             <h3>Filter(s)</h3>
-            <Button appearance="primary" onClick={handleResetFilters}>
-              Reset Filter(s)
-            </Button>
+            <Button onClick={handleResetFilters}>Reset Filter(s)</Button>
           </div>
 
           {Object.keys(filterData).map(filterId => (
