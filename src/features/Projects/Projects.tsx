@@ -15,14 +15,13 @@ import {
 } from '@fluentui/react-components';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useStyles } from './Project.styles';
-// import { Filter } from './components/Filter';
+// // import { Filter } from './components/Filter';
 import { RootState } from '@/app/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { columns } from './Projects.mocks';
 import { Item } from './Projects.models';
 import { PopoverFilter } from './components/PopoverFilter';
 import { getTableData, setSearchValue } from './store/Projects.store';
-import { SectionalProgressBar } from '../common/components/SectionalProgressBar';
 
 export const Projects = () => {
   const styles = useStyles();
