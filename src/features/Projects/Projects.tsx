@@ -15,7 +15,7 @@ import {
 } from '@fluentui/react-components';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useStyles } from './Project.styles';
-// import { Filter } from './components/Filter';
+// // import { Filter } from './components/Filter';
 import { RootState } from '@/app/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { columns } from './Projects.mocks';
@@ -141,6 +141,9 @@ export const Projects = () => {
             <TableHeaderCell {...headerSortProps('endDate')} className={styles.headerCell}>
               End Date
             </TableHeaderCell>
+            <TableHeaderCell {...headerSortProps('progressBar')} className={styles.headerCell}>
+              Progress Bar
+            </TableHeaderCell>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -161,6 +164,7 @@ export const Projects = () => {
                 <TableCell>{item.status.label}</TableCell>
                 <TableCell>{item.startDate.label}</TableCell>
                 <TableCell>{item.endDate.label}</TableCell>
+                <TableCell>{item.progressBar ? item.progressBar.label : '-'}</TableCell>
               </TableRow>
             ))
           )}

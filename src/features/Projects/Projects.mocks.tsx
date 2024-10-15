@@ -1,5 +1,6 @@
 import { TableColumnDefinition, createTableColumn } from '@fluentui/react-components';
 import { Item } from './Projects.models';
+import { SectionalProgressBar } from '../common/components/SectionalProgressBar';
 
 export const items: Item[] = [
   {
@@ -9,6 +10,7 @@ export const items: Item[] = [
     status: { label: 'In Progress' },
     startDate: { label: 'Jun 15, 2024', timestamp: 1718409600 },
     endDate: { label: 'Nov 29, 2024', timestamp: 1732838400 },
+    progressBar: { label: <SectionalProgressBar /> },
   },
   {
     projectName: { label: 'SaaS Platform Implementation' },
@@ -17,6 +19,7 @@ export const items: Item[] = [
     status: { label: 'Completed' },
     startDate: { label: 'Aug 17, 2023', timestamp: 1692230400 },
     endDate: { label: 'Sep 08, 2024', timestamp: 1725753600 },
+    progressBar: { label: <SectionalProgressBar /> },
   },
   {
     projectName: { label: 'Warehouse Automation' },
@@ -25,6 +28,7 @@ export const items: Item[] = [
     status: { label: 'Pending' },
     startDate: { label: 'May 10, 2024', timestamp: 1715299200 },
     endDate: { label: 'Dec 29, 2024', timestamp: 1735430400 },
+    progressBar: { label: <SectionalProgressBar /> },
   },
   {
     projectName: { label: 'Zero Trust Security Framework' },
@@ -33,6 +37,7 @@ export const items: Item[] = [
     status: { label: 'In Progress' },
     startDate: { label: 'Sep 15, 2023', timestamp: 1694736000 },
     endDate: { label: 'Oct 11, 2024', timestamp: 1728604800 },
+    progressBar: { label: <SectionalProgressBar /> },
   },
   {
     projectName: { label: 'Energy Consumption Optimization' },
@@ -41,6 +46,7 @@ export const items: Item[] = [
     status: { label: 'Pending' },
     startDate: { label: 'Apr 09, 2024', timestamp: 1712620800 },
     endDate: { label: 'Nov 24, 2024', timestamp: 1732406400 },
+    progressBar: { label: <SectionalProgressBar /> },
   },
   {
     projectName: { label: 'HR Policy Update' },
@@ -49,6 +55,7 @@ export const items: Item[] = [
     status: { label: 'In Progress' },
     startDate: { label: 'Oct 08, 2024', timestamp: 1728345600 },
     endDate: { label: 'Nov 11, 2024', timestamp: 1731283200 },
+    progressBar: { label: <SectionalProgressBar /> },
   },
   {
     projectName: { label: 'Smart Manufacturing Initiative' },
@@ -57,6 +64,7 @@ export const items: Item[] = [
     status: { label: 'Pending' },
     startDate: { label: 'May 19, 2024', timestamp: 1716076800 },
     endDate: { label: 'Jun 26, 2024', timestamp: 1719360000 },
+    progressBar: { label: <SectionalProgressBar /> },
   },
   {
     projectName: { label: 'Strategic Alliance Formation' },
@@ -65,6 +73,7 @@ export const items: Item[] = [
     status: { label: 'Pending' },
     startDate: { label: 'Nov 10, 2023', timestamp: 1699574400 },
     endDate: { label: 'Jul 15, 2024', timestamp: 1721001600 },
+    progressBar: { label: <SectionalProgressBar /> },
   },
   {
     projectName: { label: 'On-Time Delivery Rate' },
@@ -73,6 +82,7 @@ export const items: Item[] = [
     status: { label: 'Pending' },
     startDate: { label: 'Aug 11, 2023', timestamp: 1691712000 },
     endDate: { label: 'Feb 19, 2024', timestamp: 1708300800 },
+    progressBar: { label: <SectionalProgressBar /> },
   },
   {
     projectName: { label: 'Disaster Recovery Plan' },
@@ -81,6 +91,7 @@ export const items: Item[] = [
     status: { label: 'On Hold' },
     startDate: { label: 'Oct 06, 2023', timestamp: 1696550400 },
     endDate: { label: 'Mar 08, 2024', timestamp: 1709856000 },
+    progressBar: { label: <SectionalProgressBar /> },
   },
 ];
 
@@ -108,5 +119,8 @@ export const columns: TableColumnDefinition<Item>[] = [
   createTableColumn<Item>({
     columnId: 'endDate',
     compare: (a, b) => a.endDate.timestamp - b.endDate.timestamp,
+  }),
+  createTableColumn<Item>({
+    columnId: 'progressBar',
   }),
 ];
