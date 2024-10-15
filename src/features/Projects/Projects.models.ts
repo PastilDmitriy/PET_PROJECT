@@ -1,7 +1,12 @@
 import { TableColumnDefinition, TableColumnId } from '@fluentui/react-components';
+import React from 'react';
 
 export type FileCell = {
   label: string;
+};
+
+export type ProgressBar = {
+  label: React.ReactElement;
 };
 
 export type DateCell = {
@@ -16,6 +21,7 @@ export type Item = {
   status: FileCell;
   startDate: DateCell;
   endDate: DateCell;
+  progressBar?: ProgressBar;
 };
 
 export type TGetSortedTableData = {

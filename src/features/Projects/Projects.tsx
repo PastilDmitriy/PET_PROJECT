@@ -22,6 +22,7 @@ import { columns } from './Projects.mocks';
 import { Item } from './Projects.models';
 import { PopoverFilter } from './components/PopoverFilter';
 import { getTableData, setSearchValue } from './store/Projects.store';
+import { SectionalProgressBar } from '../common/components/SectionalProgressBar';
 
 export const Projects = () => {
   const styles = useStyles();
@@ -141,6 +142,9 @@ export const Projects = () => {
             <TableHeaderCell {...headerSortProps('endDate')} className={styles.headerCell}>
               End Date
             </TableHeaderCell>
+            <TableHeaderCell {...headerSortProps('progressBar')} className={styles.headerCell}>
+              Progress Bar
+            </TableHeaderCell>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -161,6 +165,7 @@ export const Projects = () => {
                 <TableCell>{item.status.label}</TableCell>
                 <TableCell>{item.startDate.label}</TableCell>
                 <TableCell>{item.endDate.label}</TableCell>
+                <TableCell>{item.progressBar ? item.progressBar.label : '-'}</TableCell>
               </TableRow>
             ))
           )}
