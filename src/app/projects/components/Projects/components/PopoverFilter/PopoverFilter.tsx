@@ -1,4 +1,4 @@
-import { RootState } from '@/app/store';
+import { RootState } from '@/store';
 import { Popover, PopoverTrigger, Button, PopoverSurface, Checkbox, CheckboxOnChangeData, Field, SearchBox, mergeClasses } from '@fluentui/react-components';
 import { FilterFilled } from '@fluentui/react-icons';
 import React, { FC, useState } from 'react';

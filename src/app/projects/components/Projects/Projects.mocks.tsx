@@ -1,6 +1,6 @@
 import { TableColumnDefinition, createTableColumn } from '@fluentui/react-components';
 import { Item } from './Projects.models';
-import { SectionalProgressBar } from '../common/components/SectionalProgressBar';
+import { SectionalProgressBar } from '../../../../components/SectionalProgressBar';
 
 export const items: Item[] = [
   {

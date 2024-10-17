@@ -1,4 +1,4 @@
-import ProjectsReducer from '@/features/Projects/store/Projects.store';
+import ProjectsReducer from '@/app/projects/components/Projects/store/Projects.store';
 import { configureStore } from '@reduxjs/toolkit';
 
 export const store = configureStore({
